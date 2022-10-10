@@ -4,12 +4,13 @@ import 'animate.css/animate.min.css';
 
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+
 import css from './ContactForm.module.css';
+import { addContact } from 'redux/operations';
 
 export default function ContactForm({ onSubmit }) {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
 
   const inputNameRef = useRef();
 
@@ -17,7 +18,7 @@ export default function ContactForm({ onSubmit }) {
     event.preventDefault();
 
     const form = event.target;
-    const number = form.elements.number.value;
+    const phone = form.elements.phone.value;
     let name = form.elements.name.value;
 
     name = name[0].toUpperCase() + name.substring(1);
@@ -28,7 +29,7 @@ export default function ContactForm({ onSubmit }) {
       exit: 'animate__animated animate__bounceOut',
     });
 
-    if (contacts.find(contact => contact.name === name)) {
+    if (contacts.find(contact => contact?.name === name)) {
       toast.warn(`${name} is already in contacts`, {
         transition: bounce,
         dragable: true,
@@ -40,7 +41,7 @@ export default function ContactForm({ onSubmit }) {
       return;
     }
 
-    dispatch(addContact({ name, number }));
+    dispatch(addContact({ name, phone }));
 
     inputNameRef.current.focus();
     form.reset();
@@ -68,7 +69,7 @@ export default function ContactForm({ onSubmit }) {
             <input
               className={css.form__input}
               type="tel"
-              name="number"
+              name="phone"
               pattern="\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required

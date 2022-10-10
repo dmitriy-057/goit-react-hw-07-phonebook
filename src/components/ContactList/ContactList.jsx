@@ -3,7 +3,7 @@ import css from './ContactList.module.css';
 import { useSelector } from 'react-redux';
 
 export default function ContactList() {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.filter);
 
   const filteredContacts = contacts.filter(({ name }) =>
@@ -21,10 +21,10 @@ export default function ContactList() {
       </thead>
 
       <tbody>
-        {filteredContacts.map(({ id, name, number }) => {
+        {filteredContacts.map(({ id, name, phone }) => {
           return (
             <tr key={id}>
-              <ContactItem id={id} name={name} number={number} />
+              <ContactItem id={id} name={name} phone={phone} />
             </tr>
           );
         })}

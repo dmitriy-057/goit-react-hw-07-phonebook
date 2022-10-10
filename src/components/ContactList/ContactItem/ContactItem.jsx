@@ -1,9 +1,9 @@
 import css from './ContactItem.module.css';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 
-export default function ContactItem({ id, name, number }) {
+export default function ContactItem({ id, name, phone }) {
   const dispatch = useDispatch();
 
   const handleDeleteContact = () => {
@@ -13,7 +13,7 @@ export default function ContactItem({ id, name, number }) {
   return (
     <>
       <td>{name}</td>
-      <td>{number}</td>
+      <td>{phone}</td>
       <td>
         <button
           className={css.button}
@@ -30,5 +30,5 @@ export default function ContactItem({ id, name, number }) {
 ContactItem.prototype = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 };
