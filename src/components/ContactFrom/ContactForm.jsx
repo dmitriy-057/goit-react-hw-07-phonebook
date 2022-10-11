@@ -6,11 +6,13 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import css from './ContactForm.module.css';
+
 import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 
 export default function ContactForm({ onSubmit }) {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const contacts = useSelector(selectContacts);
 
   const inputNameRef = useRef();
 
@@ -23,13 +25,13 @@ export default function ContactForm({ onSubmit }) {
 
     name = name[0].toUpperCase() + name.substring(1);
 
-    const warnToastId = 'toast-id';
-    const bounce = cssTransition({
-      enter: 'animate__animated animate__bounceIn',
-      exit: 'animate__animated animate__bounceOut',
-    });
-
     if (contacts.find(contact => contact?.name === name)) {
+      const warnToastId = 'toast-id';
+      const bounce = cssTransition({
+        enter: 'animate__animated animate__bounceIn',
+        exit: 'animate__animated animate__bounceOut',
+      });
+
       toast.warn(`${name} is already in contacts`, {
         transition: bounce,
         dragable: true,
