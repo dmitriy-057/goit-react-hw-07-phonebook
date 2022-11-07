@@ -83,7 +83,7 @@ export default function ContactForm({ onSubmit }) {
           Add contact
         </button>
       </form>
-      <ToastContainer style={{ fontSize: '18px' }} />
+      <ToastContainer style={{ fontSize: '16px' }} />
     </>
   );
 }
